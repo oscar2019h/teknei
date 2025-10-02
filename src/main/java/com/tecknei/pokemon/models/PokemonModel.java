@@ -7,28 +7,77 @@ import jakarta.persistence.*;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * JPA entity representing the Pokémon catalog.
+ *
+ * <p>This entity is mapped to the database table <b>pokemon_cat</b>. It stores
+ * the basic attributes of a Pokémon, including its type, abilities, attacks,
+ * statistics, and an image.</p>
+ *
+ * <p>JSONB fields are used for complex attributes such as skills, attacks, and
+ * statistics, which are mapped using custom converters:
+ * <ul>
+ *   <li>{@link MapToJsonConverter} for mapping {@link Map} objects</li>
+ *   <li>{@link JsonListConverter} for mapping {@link List} objects</li>
+ * </ul>
+ * </p>
+ *
+ * <p>The Pokémon's image is stored as a byte array in the column <b>img</b>.</p>
+ *
+ * <p>Example schema (PostgreSQL):</p>
+ * <pre>
+ * CREATE TABLE pokemon_cat (
+ *     id BIGSERIAL PRIMARY KEY,
+ *     name VARCHAR(255),
+ *     species VARCHAR(255),
+ *     type VARCHAR(255),
+ *     skills JSONB,
+ *     attacks JSONB,
+ *     statistics JSONB,
+ *     img BYTEA
+ * );
+ * </pre>
+ *
+ * @author Oscar HG
+ */
 @Entity
 @Table(name = "pokemon_cat")
 public class PokemonModel {
 
-
+    /** Primary key identifier of the Pokémon. */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    /** The Pokémon's name. */
     private String name;
+
+    /** The Pokémon's species classification. */
     private String species;
+
+    /** The elemental type of the Pokémon (e.g., Fire, Water, Electric). */
     private String type;
+
+    /** The Pokémon's skills or abilities, stored as JSON. */
     @Column(columnDefinition = "jsonb")
     @Convert(converter = MapToJsonConverter.class)
-    private  Map<String, Object> skills;
+    private Map<String, Object> skills;
+
+    /** The Pokémon's attacks or moves, stored as a JSON list. */
     @Column(columnDefinition = "jsonb")
     @Convert(converter = JsonListConverter.class)
     private List<String> attacks;
+
+    /** The Pokémon's statistics (e.g., HP, Attack, Defense), stored as JSON. */
     @Column(columnDefinition = "jsonb")
     @Convert(converter = MapToJsonConverter.class)
-    private  Map<String, Object> statistics;
+    private Map<String, Object> statistics;
+
+    /** The Pokémon's image stored as binary data (byte array). */
     @Column(name = "img")
     private byte[] byteImage;
+
+    // Getters and setters
 
     public Long getId() {
         return id;
