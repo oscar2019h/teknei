@@ -1,11 +1,14 @@
 package com.tecknei.pokemon.controllers;
 
 import com.tecknei.pokemon.dto.ResponseErrorDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.Date;
 
@@ -27,23 +30,12 @@ import java.util.Date;
 @RestControllerAdvice
 public class ErrorController {
 
-    /**
-     * Handles {@link HttpClientErrorException.NotFound} exceptions and generates
-     * a standardized error response with HTTP status <b>404 Not Found</b>.
-     *
-     * <p>The error response includes:</p>
-     * <ul>
-     *   <li><b>date</b> - the timestamp when the error occurred</li>
-     *   <li><b>statusCode</b> - the HTTP status code (404)</li>
-     *   <li><b>message</b> - the exception message</li>
-     *   <li><b>description</b> - additional error context (here the status code)</li>
-     * </ul>
-     *
-     * @param e the thrown {@link Exception}, specifically an instance of
-     *          {@link HttpClientErrorException.NotFound}
-     * @return a {@link ResponseEntity} containing the {@link ResponseErrorDTO} payload
-     */
-    @ExceptionHandler(HttpClientErrorException.NotFound.class)
+    @Operation(
+            summary = "Handle 404 errors",
+            description = "Handles HttpClientErrorException.NotFound and returns a structured error response"
+    )
+    @ApiResponse(responseCode = "404", description = "Resource not found")
+    @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<ResponseErrorDTO> notFoundException(Exception e) {
         ResponseErrorDTO response = new ResponseErrorDTO();
         response.setDate(new Date());

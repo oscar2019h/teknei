@@ -2,10 +2,12 @@ package com.tecknei.pokemon.controllers;
 
 import com.tecknei.pokemon.dto.ResponseDTO;
 import com.tecknei.pokemon.services.PokemonService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * REST controller for handling Pokémon-related requests.
@@ -25,8 +27,10 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author Oscar HG
  */
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/pokemon")
+@Tag(name = "Pokemon API", description = "Operations for managing Pokémon")
 public class PokemonController {
 
     private final PokemonService service;
@@ -52,9 +56,13 @@ public class PokemonController {
      * @return a {@link ResponseDTO} containing the Pokémon data, status code,
      *         and a success message
      */
+    @Operation(summary = "Get Pokémon by Name", description = "Recover a Pokémon by its Name")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Pokémon retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Pokémon not found")
+    })
     @GetMapping("/{name}")
     public ResponseDTO getPokemon(@PathVariable String name) {
-        System.out.println(name);
         ResponseDTO rst = new ResponseDTO();
         rst.setData(service.getByName(name));
         rst.setStatusCode(200);

@@ -59,7 +59,6 @@ public class MapToJsonConverter implements AttributeConverter<Map<String, Object
     public Map<String, Object> convertToEntityAttribute(String dbData) {
         if (dbData == null) return null;
         try {
-            System.out.println(dbData);
             return objectMapper.readValue(dbData, Map.class);
         } catch (IOException e) {
             throw new RuntimeException("Error converting JSON to Map", e);

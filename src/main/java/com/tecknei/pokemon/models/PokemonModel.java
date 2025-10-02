@@ -3,6 +3,8 @@ package com.tecknei.pokemon.models;
 import com.tecknei.pokemon.converters.JsonListConverter;
 import com.tecknei.pokemon.converters.MapToJsonConverter;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.Map;
@@ -42,6 +44,8 @@ import java.util.Map;
  */
 @Entity
 @Table(name = "pokemon_cat")
+@Getter
+@Setter
 public class PokemonModel {
 
     /** Primary key identifier of the Pokémon. */

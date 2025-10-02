@@ -67,10 +67,19 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>io.hypersistence.utils</groupId>
-            <artifactId>hypersistence-utils-hibernate61</artifactId>
-            <version>3.</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.8.9</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
 
     </dependencies>
 

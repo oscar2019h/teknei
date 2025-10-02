@@ -1,4 +1,4 @@
-HELP.md
+REAME.md
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
