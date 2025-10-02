@@ -89,3 +89,31 @@ src/main/java/com/tecknei/pokemon
 │── services/       # services
 
 ```
+# PostgreSQL Tables
+
+### Table pokemon_cat: 
+```sql
+CREATE TABLE IF NOT EXISTS public.pokemon_cat
+(
+    id bigint NOT NULL,
+    name character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    species character varying(255) COLLATE pg_catalog."default",
+    type character varying(255) COLLATE pg_catalog."default",
+    skills jsonb,
+    attacks jsonb,
+    statistics jsonb,
+    img bytea,
+    CONSTRAINT pokemon_cat_pk PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.pokemon_cat
+    OWNER to postgres;
+
+REVOKE ALL ON TABLE public.pokemon_cat FROM user_test;
+
+GRANT ALL ON TABLE public.pokemon_cat TO postgres;
+
+GRANT DELETE, UPDATE, INSERT, SELECT ON TABLE public.pokemon_cat TO user_test;
+```
